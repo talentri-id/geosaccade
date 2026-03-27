@@ -1,0 +1,74 @@
+# GeoSaccade — Default Training Configuration
+
+model:
+  # Vision encoder
+  vision_encoder: "dinov2_vitl14"
+  freeze_encoder: true
+  lora_rank: 16
+  lora_alpha: 32
+  patch_dim: 1024
+  num_patches: 576  # 24x24 for ViT-L/14 with 518px input
+
+  # GeoGRU
+  hidden_dim: 1024
+  geo_dim: 512
+
+  # Saccadic attention
+  key_dim: 256
+  num_steps: 5
+  top_k: 16
+  ior_decay: 0.8
+  temperature_init: 1.0
+
+  # Glimpse
+  glimpse_dim: 512
+  peripheral_ratio: 0.3
+
+  # GNN Querier
+  gnn_dim: 512
+  gnn_levels: 3
+  gnn_layers_per_level: 2
+  gnn_heads: 4
+
+  # Classification
+  num_classes: 100000  # S2 cells or discretized locations
+
+  # ACT halting (optional)
+  use_act: false
+  act_threshold: 0.99
+
+data:
+  dataset: "im2gps3k"
+  image_size: 518
+  graph_path: "data/graph.pt"
+  embeddings_path: "data/embeddings/"
+  num_workers: 8
+  pin_memory: true
+
+training:
+  batch_size: 64
+  epochs: 50
+  optimizer: "adamw"
+  learning_rate: 3.0e-4
+  weight_decay: 0.05
+  warmup_epochs: 5
+  scheduler: "cosine"
+  gradient_clip: 1.0
+  mixed_precision: true
+  compile: true  # torch.compile
+
+  # Loss weights
+  loss:
+    cls_weight: 1.0
+    inter_weight: 0.3
+    geo_weight: 0.5
+    entropy_weight: 0.01
+    diversity_weight: 0.1
+    halt_weight: 0.01
+
+logging:
+  project: "geosaccade"
+  entity: "talentri"
+  log_every: 50
+  save_every: 5
+  eval_every: 1

@@ -1,0 +1,66 @@
+# GeoSaccade — MVP Configuration
+# Reduced scale for rapid prototyping and validation
+
+model:
+  vision_encoder: "dinov2_vitb14"  # ViT-B instead of ViT-L
+  freeze_encoder: true
+  lora_rank: 8
+  lora_alpha: 16
+  patch_dim: 768
+  num_patches: 256  # 16x16 for ViT-B/14 with 224px input
+
+  hidden_dim: 512
+  geo_dim: 256
+
+  key_dim: 128
+  num_steps: 3  # fewer steps
+  top_k: 8
+  ior_decay: 0.8
+  temperature_init: 1.0
+
+  glimpse_dim: 256
+  peripheral_ratio: 0.3
+
+  gnn_dim: 256
+  gnn_levels: 2  # 2-level hierarchy
+  gnn_layers_per_level: 1
+  gnn_heads: 2
+
+  num_classes: 10000  # 10K nodes
+
+  use_act: false
+
+data:
+  dataset: "im2gps3k"
+  image_size: 224
+  graph_path: "data/graph_mvp.pt"
+  embeddings_path: "data/embeddings_mvp/"
+  num_workers: 4
+  pin_memory: true
+
+training:
+  batch_size: 128
+  epochs: 20
+  optimizer: "adamw"
+  learning_rate: 5.0e-4
+  weight_decay: 0.05
+  warmup_epochs: 2
+  scheduler: "cosine"
+  gradient_clip: 1.0
+  mixed_precision: true
+  compile: false
+
+  loss:
+    cls_weight: 1.0
+    inter_weight: 0.3
+    geo_weight: 0.5
+    entropy_weight: 0.01
+    diversity_weight: 0.1
+    halt_weight: 0.0
+
+logging:
+  project: "geosaccade-mvp"
+  entity: "talentri"
+  log_every: 20
+  save_every: 5
+  eval_every: 1

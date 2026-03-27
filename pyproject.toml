@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "geosaccade"
+version = "0.1.0"
+description = "GeoSaccade: Sequential Attention with Geographic Gating for Image Geolocation via Graph Neural Networks"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [
+    {name = "Talentri Research"},
+]
+dependencies = [
+    "torch>=2.0",
+    "torch_geometric",
+    "timm",
+    "pyyaml",
+    "wandb",
+    "numpy",
+    "pillow",
+    "tqdm",
+    "matplotlib",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "black",
+    "ruff",
+    "ipykernel",
+    "jupyter",
+]
+
+[tool.setuptools.packages.find]
+include = ["geosaccade*"]
+
+[tool.black]
+line-length = 100
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "I", "W"]
