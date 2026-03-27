@@ -1,15 +1,17 @@
 """GeoSaccade model components."""
 
-from .geosaccade import GeoSaccadeModel
-from .geo_gru import GeoGRU
+from .geo_gru import GeoGRUCell
 from .saccadic_attention import SaccadicAttention
 from .glimpse import GlimpseExtractor
 from .gnn_querier import GNNQuerier
+from .vision import VisionEncoder
+from .geosaccade import GeoSaccade
 
 __all__ = [
-    "GeoSaccadeModel",
-    "GeoGRU",
+    "GeoGRUCell",
     "SaccadicAttention",
     "GlimpseExtractor",
     "GNNQuerier",
+    "VisionEncoder",
+    "GeoSaccade",
 ]

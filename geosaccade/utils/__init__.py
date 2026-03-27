@@ -1,6 +1,6 @@
-"""Utility functions for GeoSaccade."""
+"""GeoSaccade utilities."""
 
-from .haversine import haversine_distance
+from .haversine import haversine_distance, HaversineLoss
 from .metrics import GeoMetrics
 
-__all__ = ["haversine_distance", "GeoMetrics"]
+__all__ = ["haversine_distance", "HaversineLoss", "GeoMetrics"]

@@ -1,4 +1,4 @@
-"""Loss functions for GeoSaccade training."""
+"""GeoSaccade loss functions."""
 
 from .multi_task import GeoSaccadeLoss
 
